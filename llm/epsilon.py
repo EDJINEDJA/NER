@@ -8,37 +8,19 @@ from ep import data
 
 WORKDIR = os.getcwd()
 
-NAME = ["Rognons", "Barbara", "Perusset", "Shpeter", "Blandu", "Antoinette", "Vertési", "Yoren", "Baroty", "Dumas",
-        "Gomette", "Dinzi", "Tanguy", "Maude Otrale", "Mette"]
+NAME = []
 
-SURNAME = ["Agnès", "Stephen", "Olivier", "Brigitte", "Rechat" , "Pierre", "Guillaume",
- "Aline","Raphaël","Suzanne", "Hélène", "Thomas", "Guillaume", "Rose"]
+SURNAME = []
 
-ORG = ["Pourtalès", 'CHUV', 'Venog', 'CMS', "Fauvettes", "les Fauvettes", "l'hôpital de la Vallée", "Vallée", "Lidl"]
+ORG = [ "Lidl"]
 
-LOC = ["Neuchâtel",'hutins cinq','Henry Ruch',"bochets", "Baume", "Yverdon", "l'église pierre numéro neuf", "Col de la vue des Alpes", "Penthalaz", "du grec quatorze",
-    "Lausanne", "du grec quatorze", "Jura", "quatorze D", "Montblesson", "des bosquets de Julie", "Clarens", "Connerade", "Yoren", "Saint-Cergue", 
-    "Arzier", "mamie à Collange", "Collange", "centrale cinquante-sept", "Montagny-la-Ville", "Abeille", "Vallée de Joux", "Morges", "Nyons", "l'Abeille", "Morges"]
+LOC = []
 
 MISC = [
-    "cent quarante-quatre",
-    "cent dix-sept",
-    "cent quatre-vingt-seize",
-    "cent douze",
-    "cent quatorze",
-    "dix-huit",
-    "dix-sept",
-    "quinze",
-    "cent quarante-quatre",
-    "cent dix-sept",
-    "cent quatre-vingt-seize",
+
 ]
 
 MISC1 = [
-    "zéro vingt-et-un huit cent trois -- huit cent trois -- zéro trois -- zéro trois -- huitante-huit -- huitante-huit",
-    "zéro six vingt-trois quarante-cinq trente-deux vingt-et-un",
-    "zéro sept cinquante-six quatre-vingt-douze dix-sept cinquante-trois",
-    "zéro un quarante-trois soixante-huit quatre-vingt-quinze zéro deux",
     "zéro deux trente-sept vingt-et-un cinquante-trois zéro huit",
     "zéro six quatre-vingt-dix zéro neuf vingt-cinq soixante-huit",
     "zéro trois quarante-deux cinquante-huit trente-sept onze",
