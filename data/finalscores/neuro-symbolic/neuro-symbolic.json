@@ -1,0 +1,24 @@
+{
+    "score": {
+        "PER": {
+            "precision": 0.07,
+            "recall": 0.11,
+            "f1_score": 0.08
+        },
+        "LOC": {
+            "precision": 0.71,
+            "recall": 0.64,
+            "f1_score": 0.66
+        },
+        "ORG": {
+            "precision": 0.25,
+            "recall": 0.13,
+            "f1_score": 0.17
+        },
+        "MISC": {
+            "precision": 0.18,
+            "recall": 0.19,
+            "f1_score": 0.18
+        }
+    }
+}

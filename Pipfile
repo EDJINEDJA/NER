@@ -1,0 +1,29 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ollama = "*"
+instructor = "*"
+groq = "*"
+python-dotenv = "*"
+transformers = "*"
+pandas = "*"
+pdfplumber = "*"
+striprtf = "*"
+docx = "*"
+python-docx = "*"
+protobuf = "*"
+tiktoken = "*"
+sentencepiece = "*"
+scikit-learn = "*"
+torch = "*"
+torchvision = "*"
+torchaudio = "*"
+plotnine = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
