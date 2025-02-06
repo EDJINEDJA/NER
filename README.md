@@ -18,10 +18,8 @@
 <!--ts-->
 * [Aims and Objectives](#Aims-and-Objectives)
 * [Features](#Features)
-* [Anonymization Software](#Anonymization-Software)
-* [Usage](#Usage)
-* [Inference](#Inference)
-* [NER Model (camemBERT)](#NER-Model-camemBERT)
+* [Neuro-symbolic Approach](#Anonymization-Software)
+* [NER Model Fine-tuning Approach](#NER-Model-camemBERT)
 * [LLM Approach](#LLM-Approach)
 <!--te-->
 
