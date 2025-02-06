@@ -1,48 +1,52 @@
 import os
-import transformers
+from typing import Dict
+from pathlib import Path
+from transformers import AutoTokenizer
+from dataclasses import dataclass, field
 
+@dataclass
+class Config():
+    WORKDIR : Path = Path(os.getcwd())
 
-WORKDIR = os.getcwd()
+    RAW_DATA_PATH : Path = Path(os.path.abspath(os.path.join(WORKDIR, "camembertft/input/raw/corpus.json")))
 
-RAW_DATA_PATH = os.path.abspath(os.path.join(WORKDIR, "camembertft/input/raw/corpus.json"))
+    ARTIFACT_DATA_PATH : Path = Path(os.path.abspath(os.path.join(WORKDIR, "camembertft/input/artifact/corpus.csv")))
 
-ARTIFACT_DATA_PATH = os.path.abspath(os.path.join(WORKDIR, "camembertft/input/artifact/corpus.csv"))
+    TRAINING_FILE : Path = Path(os.path.join(WORKDIR, "camembertft/input/artifact/train.csv"))
 
-TRAINING_FILE = os.path.join(WORKDIR, "camembertft/input/artifact/train.csv")
+    TEST_FILE : Path = Path(os.path.abspath(os.path.join(WORKDIR, "camembertft/input/artifact/test.csv")))
 
-TEST_FILE = os.path.abspath(os.path.join(WORKDIR, "camembertft/input/artifact/test.csv"))
+    TEST_BATCH_SIZE : int = 1
 
-TEST_BATCH_SIZE= 1
+    MAX_LEN : int = 120
 
-MAX_LEN = 256
+    TRAIN_BATCH_SIZE : int = 32
 
-TRAIN_BATCH_SIZE = 32
+    VALID_BATCH_SIZE : int = 8
 
-VALID_BATCH_SIZE = 8
+    EPOCHS : int  = 10
 
-EPOCHS = 20
+    BACKBONE : str = "camembert-base"
 
-BACKBONE = "camembert-base"
+    LOSS_IGNORE_INDEX : float = -100
 
-LOSS_IGNORE_INDEX = -100
+    CLASSES : dict = field(default_factory=lambda:  {'O': 0, 
+                'B-PER': 1, 'I-PER': 2,
+                    'B-LOC': 3, 'I-LOC': 4,
+                    'B-ORG': 5, 'I-ORG': 6,
+                    'B-MISC': 7, 'I-MISC': 8
+                })
 
-CLASSES = {'O': 0, 
-               'B-PER': 1, 'I-PER': 2,
-                'B-LOC': 3, 'I-LOC': 4,
-                'B-ORG': 5, 'I-ORG': 6,
-                'B-MISC': 7, 'I-MISC': 8
-            }
+    NUM_TAG : int = 9
 
-NUM_TAG = 9
+    PROPAGATE_LABEL_TO_WORD_PIECES : bool = True
 
-propagate_label_to_word_pieces = True
+    TOKENIZER : AutoTokenizer = AutoTokenizer.from_pretrained(BACKBONE)
 
-TOKENIZER = transformers.AutoTokenizer.from_pretrained(BACKBONE)
+    MODEL_PATH : Path = Path(os.path.join(WORKDIR, "camembertft/input/Camembertft/Camembertft.pth"))
 
-MODEL_PATH=os.path.join(WORKDIR, "camembertft/input/Camembertft/Camembertft.pth'")
+    MODEL_REPORT_PATH : Path = Path(os.path.join(WORKDIR, "camembertft/input/Camembertft/model_report.json"))
 
-MODEL_REPORT_PATH = os.path.join(WORKDIR, "camembertft/input/Camembertft/model_report.json")
+    RESULT_DETAIL_PATH : Path = Path(os.path.join(WORKDIR, "camembertft/input/Camembertft/detailed_report.json"))
 
-RESULT_DETAIL_PATH=os.path.join(WORKDIR, "camembertft/input/Camembertft/detailed_report.json")
-
-RESULT_GENERAL_PATH=os.path.join(WORKDIR, "camembertft/input/Camembertft/general_report.json")
+    RESULT_GENERAL_PATH : Path = Path(os.path.join(WORKDIR, "camembertft/input/Camembertft/general_report.json"))

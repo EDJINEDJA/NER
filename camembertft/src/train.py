@@ -4,17 +4,22 @@ import numpy as np
 import joblib
 import torch
 import json
+from torch import Tensor
 
 from sklearn import preprocessing
 from sklearn import model_selection
-
+from typing import List, Sequence, Union, Dict
 from transformers import get_linear_schedule_with_warmup
 
 import config
 import dataset
 import trainer
-from model import EntityModel
+from model import NERModel
 import ast
+
+from config import Config
+
+config = Config()
 
 def split_data(data_path):
 
@@ -50,9 +55,9 @@ def process_data(data_path):
     df["nertags"] = df["nertags"].apply(
     lambda item: [enc_tag.get(str(tag), 0) for tag in item]
     )
-    sentences = df.groupby("sentences")["chunktags"].apply(list).values
+    sentences = df["chunktags"].apply(list).values
 
-    tag = df.groupby("sentences")["nertags"].apply(list).values
+    tag = df["nertags"].apply(list).values
 
     return sentences, tag, enc_tag
 
@@ -72,10 +77,10 @@ if __name__ == "__main__":
         test_tag
     ) = model_selection.train_test_split(sentences, tag, random_state=42, test_size=0.25)
 
+
     train_dataset = dataset.CustomDataset(
         texts=train_sentences, tags=train_tag
     )
-
 
     train_data_loader = torch.utils.data.DataLoader(
         train_dataset, batch_size=config.TRAIN_BATCH_SIZE, num_workers=4
@@ -90,7 +95,9 @@ if __name__ == "__main__":
     )
 
     device = torch.device("cuda")
-    model = EntityModel(num_tag=num_tag)
+
+
+    model = NERModel(num_tag=num_tag)
     model.to(device)
 
     param_optimizer = list(model.named_parameters())
@@ -111,7 +118,7 @@ if __name__ == "__main__":
     ]
 
     num_train_steps = int(len(train_sentences) / config.TRAIN_BATCH_SIZE * config.EPOCHS)
-    optimizer =  torch.optim.AdamW(optimizer_parameters, lr=3e-4)
+    optimizer =  torch.optim.AdamW(optimizer_parameters, lr=2e-4)
     scheduler = get_linear_schedule_with_warmup(
         optimizer, num_warmup_steps=0, num_training_steps=num_train_steps
     )

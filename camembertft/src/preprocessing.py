@@ -195,10 +195,3 @@ if __name__=='__main__':
 
     parser = Preprocessing(config)
     parser.process()
-
-
-
-
-
-
-        

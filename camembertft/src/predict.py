@@ -5,12 +5,22 @@ from sklearn.metrics import classification_report
 import json
 import config
 import dataset
-from model import EntityModel
+from model import NERModel
 from train import process_data
 import time
+from config import Config
+
+# Load configuration
+config = Config()
+
 def map_to_general_labels(labels):
     """
     Map fine-grained labels to general labels [O, PER, LOC, ORG, MISC].
+    - O: Non-entity
+    - PER: Person
+    - LOC: Location
+    - ORG: Organization
+    - MISC: Miscellaneous entity
     """
     general_map = {
         0: 0,  # O -> O
@@ -22,70 +32,70 @@ def map_to_general_labels(labels):
     return [general_map[label] for label in labels]
 
 if __name__ == "__main__":
-    
+    # Load encoding tags and number of tags from configuration
     enc_tag = config.CLASSES
     num_tag = config.NUM_TAG
 
-    # Charger les données de test
+    # Load and process test data
     sentences, tags, enc_tag = process_data(config.TRAINING_FILE)
     test_dataset = dataset.CustomDataset(texts=sentences, tags=tags)
     test_data_loader = torch.utils.data.DataLoader(
         test_dataset, batch_size=1, num_workers=4
     )
 
+    # Set device (GPU if available, otherwise CPU)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = EntityModel(num_tag=num_tag)
+
+    # Load the pre-trained NER model
+    model = NERModel(num_tag=num_tag)
     model.load_state_dict(torch.load(config.MODEL_PATH, map_location=device))
     model.to(device)
+    model.eval()  # Set the model to evaluation mode
 
-    model.eval()
+    # Initialize lists to store predictions and targets
     all_preds = []
     all_targets = []
 
+    # Perform inference on the test dataset
     with torch.no_grad():
         for batch in test_data_loader:
-            # start = time.time()
-
+            # Move batch data to the appropriate device
             inputs = {key: val.to(device) for key, val in batch.items()}
-            targets = batch["target_tag"].to(device)
+            targets = batch["target_tags"].to(device)
 
+            # Get model predictions
             outputs, _ = model(**inputs)
-            preds = outputs.argmax(2)  # Prendre l'indice de la classe la plus probable
+            preds = outputs.argmax(2)  # Take the index of the most likely class
 
-            # stop=time.time()
-            # print(stop-start)
-            
-
-            # Déplier les séquences et filtrer les labels à ignorer (-100)
+            # Flatten predictions and targets, and filter out ignored labels (-100)
             active_preds = preds.view(-1)
             active_targets = targets.view(-1)
 
-            valid_idx = active_targets != -100
-            all_preds.extend(active_preds[valid_idx].cpu().numpy())
-            all_targets.extend(active_targets[valid_idx].cpu().numpy())
-            
+            valid_idx = active_targets != -100  # Identify valid labels
+            all_preds.extend(active_preds[valid_idx].cpu().numpy())  # Store valid predictions
+            all_targets.extend(active_targets[valid_idx].cpu().numpy())  # Store valid targets
 
-    # Calculer les métriques détaillées pour toutes les classes
+    # Generate a detailed classification report for all classes
     target_names = list(enc_tag.keys())
     detailed_report = classification_report(
         all_targets, all_preds, target_names=target_names, output_dict=True
     )
 
-    # Mapper les étiquettes vers les catégories générales
+    # Map fine-grained labels to general categories
     general_targets = map_to_general_labels(all_targets)
     general_preds = map_to_general_labels(all_preds)
 
-    # Calculer les métriques pour les catégories générales
+    # Generate a classification report for general categories
     general_target_names = ["O", "PER", "LOC", "ORG", "MISC"]
     general_report = classification_report(
         general_targets, general_preds, target_names=general_target_names, output_dict=True
     )
 
-    # Exporter les rapports en JSON
+    # Export detailed and general reports to JSON files
     with open(config.RESULT_DETAIL_PATH, "w") as f:
         json.dump(detailed_report, f, indent=4)
 
     with open(config.RESULT_GENERAL_PATH, "w") as f:
         json.dump(general_report, f, indent=4)
 
-    print("Rapports exportés : detailed_report.json et general_report.json")
+    print("Reports exported: detailed_report.json and general_report.json")
