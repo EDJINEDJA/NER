@@ -24,7 +24,7 @@
 <!--te-->
 
 # Aims and Objectives
-This folder contains anonymization methodes for cup with de-identification of PHI(Protected Health Information) informations in free text data problem.
+This folder contains anonymization methodes for cup with de-identification of Protected Health Information (PHI) in free text data problem.
 
 # Features
 
