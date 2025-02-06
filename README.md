@@ -32,7 +32,7 @@ We present three approaches:
 
 - **Neuro-symbolic approach**
 - **NER model (camemBERT) fine-tuning approach**
-- **LLM (Large Language Model) approach** which leverages zero-shot learning.
+- **LLM (Large Language Model) approach**
 
 ## Neuro-symbolic Approach
 
