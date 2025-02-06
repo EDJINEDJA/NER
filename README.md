@@ -38,52 +38,10 @@ We present three approaches:
 
 ## Neuro-symbolic Approach
 
-In the context of the SIA-REMU project, funded thanks to FEDER and Swiss Federal Interreg subventions, this software was developed to address the challenge of how to ensure the privacy of patients when using their data.
+The **Neuro-symbolic Approach** combines symbolic and neural artificial intelligence methods to tackle complex problems. In this context, it is used to anonymize sensitive data, such as personal health information. This hybrid approach integrates explicit logical rules with machine learning models, enabling it to ensure data confidentiality while effectively analyzing complex and diverse information.
 
-The tool implements an optimal algorithm capable of guaranteeing confidentiality while processing sensitive data.
-
-## Usage
-
-#### Installation
-
-- **Clone the repository**
-
-Clone this repository into the main folder of your project to use the Anonymization Software.
-
-```bash
-$ git clone https://github.com/EDJINEDJA/NER
-```
-- requirements
-
-The toolkit support Python 3.10.6 
-
-To install required packages use:
-
-```bash
-$ pip3 install -r requirements.txt
-```
-
-####  Usage
-
-```python
-$ python Processing.py 
- 
-```
-### Inference
-
-To test the software, simply use the Processing.py script. The script is designed to take input in the form of text files (docx, pdf) and return anonymized text.
-
-
-```python
-$ python Processing.py 
- 
-```
-Batch Processing: The BatchProcessing.py script is designed to handle multiple files at once. You just need to provide a folder containing text files, and the algorithm will process them in batch.
-
-```python
-$ python BatchProcessing.py 
-```
 ## NER model (camemBERT) Fine-tuning Approach
+
 In this approach, we fine-tune the camemBERT model, a French language model, to recognize and anonymize specific Named Entities (NE) such as patient names, location, organization and other health-related terms. By training the model on a labeled dataset, we enhance its ability to accurately identify and mask PHI in text, ensuring robust data privacy.
 
 ## LLM Approach
