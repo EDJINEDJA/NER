@@ -1,11 +1,4 @@
 <p align="center">
-    <a href="https://github.com/EDJINEDJA/NER">
-        <img src="https://github.com/EDJINEDJA/NER/blob/main/hands.png" alt="anonymizationSoftware">
-    </a> 
-<br>
-
-
-<p align="center">
     <a href="https://www.python.org/doc/" alt="Python 3.9">
         <img src="https://img.shields.io/badge/python-v3.7+-blue.svg" />
     </a>
@@ -78,16 +71,15 @@ $ python Processing.py
 ```
 ### Inference
 
-For test this software you are Processing adated to take a text file on docx doc pdf formats and return text
+To test the software, simply use the Processing.py script. The script is designed to take input in the form of text files (docx, pdf) and return anonymized text.
 
-change you text file link and run  this code 
 
 ```python
 $ python Processing.py 
  
 ```
-BatchProcessing is adapted to infer the algorithme on several text
-Just fil give a text folders to the algorithme and run the following scrypte
+Batch Processing: The BatchProcessing.py script is designed to handle multiple files at once. You just need to provide a folder containing text files, and the algorithm will process them in batch.
+
 ```python
 $ python BatchProcessing.py 
 ```
