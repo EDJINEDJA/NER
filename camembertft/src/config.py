@@ -24,7 +24,7 @@ class Config():
 
     VALID_BATCH_SIZE : int = 8
 
-    EPOCHS : int  = 10
+    EPOCHS : int  = 20
 
     BACKBONE : str = "camembert-base"
 
